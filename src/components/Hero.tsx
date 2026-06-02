@@ -1,128 +1,84 @@
 import { motion } from 'motion/react';
-import { useEffect, useState } from 'react';
+import { ArrowDown } from 'lucide-react';
 
-export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+interface HeroProps {
+  onViewChange?: (view: 'home' | 'collections' | 'heritage') => void;
+}
 
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth - 0.5) * 20,
-        y: (e.clientY / window.innerHeight - 0.5) * 20,
-      });
-    };
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  // Generate random bubbles
-  const bubbles = Array.from({ length: 20 }).map((_, i) => ({
-    id: i,
-    size: Math.random() * 20 + 5,
-    left: Math.random() * 100,
-    duration: Math.random() * 3 + 2,
-    delay: Math.random() * 2,
-  }));
-
+export default function Hero({ onViewChange }: HeroProps) {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-b from-drp-dark via-drp-burgundy to-drp-black pt-20">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 opacity-30 pointer-events-none">
-        {bubbles.map((bubble) => (
-          <motion.div
-            key={bubble.id}
-            className="absolute bottom-0 rounded-full bg-drp-cream/20 blur-[1px]"
-            style={{
-              width: bubble.size,
-              height: bubble.size,
-              left: `${bubble.left}%`,
-            }}
-            animate={{
-              y: ['100vh', '-10vh'],
-              x: ['0px', `${Math.random() * 50 - 25}px`],
-              opacity: [0, 0.8, 0],
-            }}
-            transition={{
-              duration: bubble.duration,
-              repeat: Infinity,
-              delay: bubble.delay,
-              ease: 'linear',
-            }}
-          />
-        ))}
+    <section className="relative min-h-[90vh] flex items-center justify-start overflow-hidden bg-kv-cream-dark">
+      {/* Background Image with Cinematic Editorial Grade Overlay */}
+      <div className="absolute inset-0 z-0">
+        <img
+          src="/src/assets/images/kingsley_heritage_hero_1780344282640.png"
+          alt="Kingsley & Vance Autumn Editorial"
+          className="w-full h-full object-cover object-[center_35%] scale-100"
+          referrerPolicy="no-referrer"
+        />
+        {/* Soft dark vignette sweep in bottom and left for supreme legibility of serif typography */}
+        <div className="absolute inset-0 bg-gradient-to-t from-kv-charcoal/40 via-transparent to-transparent"></div>
+        <div className="absolute inset-x-0 left-0 w-full sm:w-[65%] h-full bg-gradient-to-r from-kv-charcoal/45 via-kv-charcoal/20 to-transparent"></div>
       </div>
 
-      {/* Radial Gradient Overlay */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(10,10,10,0.8)_100%)] pointer-events-none"></div>
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center text-center">
+      {/* Hero Interactive Elements Canvas */}
+      <div className="relative z-10 max-w-7xl mx-auto w-full px-6 md:px-12 py-24 flex flex-col items-start justify-center">
+        
+        {/* Elite Subtle Category Badge */}
         <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8, ease: 'easeOut' }}
-          className="mb-6"
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.9, delay: 0.15, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-6 flex items-center gap-2"
         >
-          <span className="inline-block py-1 px-3 rounded-full border border-drp-cream/30 bg-drp-black/30 backdrop-blur-sm text-drp-cream/90 text-sm font-medium tracking-widest uppercase mb-6">
-            The Original Blend
+          <span className="text-[10px] tracking-[0.35em] font-medium text-kv-cream uppercase font-sans">
+            Autumn / Winter Capsule
           </span>
         </motion.div>
 
+        {/* Headline matching user's mockup */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: 'easeOut' }}
-          className="font-display text-7xl md:text-9xl lg:text-[12rem] leading-none tracking-tight text-drp-cream text-shadow-lg mb-4"
-          style={{
-            x: mousePosition.x * -1,
-            y: mousePosition.y * -1,
-          }}
+          transition={{ duration: 1.1, delay: 0.3, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display text-4xl sm:text-6xl md:text-7xl lg:text-8xl text-kv-cream font-light tracking-tight leading-[1.05] max-w-3xl text-left select-none uppercase"
         >
-          THERE'S NOTHING
+          Timeless Elegance,
           <br />
-          <span className="text-transparent bg-clip-text bg-gradient-to-r from-drp-cream via-red-200 to-drp-cream">
-            LIKE A PEPPER
-          </span>
+          <span className="italic">Refined For Now.</span>
         </motion.h1>
 
+        {/* Minimal description for narrative flow */}
         <motion.p
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4, ease: 'easeOut' }}
-          className="text-xl md:text-3xl text-drp-cream/80 font-medium max-w-2xl mx-auto mb-10"
+          transition={{ duration: 1.1, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-6 text-sm text-kv-cream-dark/95 max-w-md font-sans font-light tracking-wide leading-relaxed text-left block"
         >
-          23 Flavors. 1 of a Kind.
+          Curating the posture of high society. Designed with meticulous full-canvas structural integrity, Loro Piana fabrics, and a shared legacy from London to New York.
         </motion.p>
 
+        {/* Discreet Shop the Look CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6, ease: 'easeOut' }}
-          className="flex flex-col sm:flex-row gap-4 sm:gap-6"
+          transition={{ duration: 1.1, delay: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          className="mt-10"
         >
-          <a
-            href="#flavors"
-            className="bg-drp-cream text-drp-burgundy px-8 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 hover:bg-white hover:scale-105 hover:shadow-[0_0_30px_rgba(253,251,247,0.3)]"
+          <button
+            onClick={() => onViewChange?.('collections')}
+            className="bg-kv-cream hover:bg-kv-navy hover:text-kv-cream text-kv-charcoal px-10 py-4 text-xs font-semibold tracking-[0.25em] uppercase rounded-none transition-all duration-500 border border-kv-cream hover:border-kv-navy inline-block shadow-md focus:outline-none"
           >
-            Explore the Flavor
-          </a>
-          <a
-            href="#locator"
-            className="bg-transparent border border-drp-cream text-drp-cream px-8 py-4 rounded-full font-bold uppercase tracking-wider transition-all duration-300 hover:bg-drp-cream/10 hover:scale-105"
-          >
-            Find Near You
-          </a>
+            Shop The Look
+          </button>
         </motion.div>
       </div>
 
-      {/* Floating Can Element (Decorative) */}
-      <motion.div
-        className="absolute right-[10%] top-[30%] w-64 h-96 bg-drp-red/20 blur-[100px] rounded-full pointer-events-none"
-        animate={{
-          scale: [1, 1.2, 1],
-          opacity: [0.3, 0.5, 0.3],
-        }}
-        transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-      />
+      {/* Discrete bottom scroll icon */}
+      <div className="absolute bottom-8 right-12 hidden lg:flex flex-col items-center gap-2 text-kv-cream/65">
+        <span className="text-[8px] tracking-[0.3em] uppercase font-mono">Scroll to view</span>
+        <ArrowDown className="w-3.5 h-3.5 animate-bounce stroke-[1.5]" />
+      </div>
     </section>
   );
 }

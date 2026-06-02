@@ -1,5 +1,6 @@
 {
-  "name": "",
-  "description": "",
-  "requestFramePermissions": []
+  "name": "Kingsley & Vance",
+  "description": "High-end luxury brand presentation and e-commerce for Kingsley & Vance.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
